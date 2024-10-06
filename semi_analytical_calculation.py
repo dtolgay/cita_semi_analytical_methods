@@ -102,7 +102,7 @@ def main(
 
 
     h2_mass_fraction, gas_column_density, dust_optical_depth, scaled_radiation_field, s, dust_optical_depth = h2_mass_fraction_calculator(
-        local_density_scale_height = np.array(gas_particles_df["average_sobolev_smoothingLength"]) / constants.kpc2pc, # kpc
+        local_density_scale_height = np.array(gas_particles_df["average_sobolev_smoothingLength"]), # pc
         density = np.array(gas_particles_df["density"]), # gr / cm^3
         metallicity= np.array(gas_particles_df["metallicity"]),  # Zsolar
         clumping_factor = 1
@@ -211,7 +211,7 @@ def h2_mass_fraction_calculator(
     local_density_scale_height: array_like
         In this equation smooting length of the gas is assumed to be accurate estimation of the local density scale height. 
         Therefore smooting length is used instead of local density scale height
-        [kpc]
+        [pc]
 
     density: array_like
         Density of the gas particles
@@ -247,7 +247,7 @@ def h2_mass_fraction_calculator(
 
 
     # The units of local_density_scale_height is kpc 
-    local_density_scale_height = local_density_scale_height * constants.kpc2cm  # [cm]
+    local_density_scale_height = local_density_scale_height * constants.pc2cm  # [cm]
 
     # Calculation of column density 
     column_density = density * local_density_scale_height   # [gr / cm^2]
