@@ -1,0 +1,5 @@
+.ipynb_checkpoints/
+gunjan/.ipynb_checkpoints/
+
+*.out
+*.err
