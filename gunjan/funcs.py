@@ -220,14 +220,14 @@ def return_h2_fraction(gas_density, smoothing_gas, Z_prime, clumping_factor):
         return h2_fraction
 
 def return_h2_fraction_doga(gas_density, smoothing_gas, Z_prime, clumping_factor):
-        local_column_density            =  gas_density*smoothing_gas*1.e10/1.e6
+        local_column_density            =  gas_density*smoothing_gas*1.e10/1.e6 # [Msolar / pc^2]
         tau_c                           = clumping_factor*local_column_density*2.e3*M_sun/(pc**2.)*Z_prime
         chi                             = 3.1*(1.+3.1*Z_prime**0.365)/4.1
         s                               = np.log(1.+0.6*chi+0.01*chi**2)/(0.6*tau_c)
         h2_fraction                     = 1. - (3.*s)/(4.*(1.+ 0.25*s))
         h2_fraction[h2_fraction < 0. ]  = 0.
 
-        return h2_fraction, tau_c
+        return h2_fraction, tau_c, local_column_density
 
 ###########################################################################################################
 
