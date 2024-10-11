@@ -73,33 +73,10 @@ def main(
     print(f"{cloudy_gas_particles_file_directory}/cloudy_gas_particles.txt read and dataframe is created!")
 
 
-    # star_column_names = [
-    #     "x",
-    #     "y",
-    #     "z",
-    #     "vx",
-    #     "vy",
-    #     "vz",
-    #     "metallicity",
-    #     "mass",
-    #     "age"
-    # ]
-
-    # star_particles_df = pd.read_csv(
-    #     f"{cloudy_gas_particles_file_directory}/comprehensive_star.txt",
-    #     delim_whitespace=True, 
-    #     comment='#', 
-    #     names=star_column_names
-    # )
-
-    # print(f"{cloudy_gas_particles_file_directory}/comprehensive_star.txt read and dataframe is created!")
-
-
     ############################################################################################################################################
 
     # h2 mass fraction is calculated by following Krumholz, and Gnedin (2011) 
     # "A Comparison of Methods for Determining the Molecular Content of Model Galaxies by Krumholz, and Gnedin (2011)"
-
 
     h2_mass_fraction, gas_column_density, dust_optical_depth, scaled_radiation_field, s, dust_optical_depth = h2_mass_fraction_calculator(
         local_density_scale_height = np.array(gas_particles_df["average_sobolev_smoothingLength"]), # pc
