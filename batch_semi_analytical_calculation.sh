@@ -1,9 +1,9 @@
 #!/bin/bash -l
 #PBS -l nodes=1:ppn=128
 #PBS -l walltime=23:00:00
-#PBS -N all_galaxies_semi_analytical_calculation
-#PBS -o all_galaxies_semi_analytical_calculation.out
-#PBS -e all_galaxies_semi_analytical_calculation.err
+#PBS -N z_3_all_galaxies_semi_analytical_calculation
+#PBS -o z_3_all_galaxies_semi_analytical_calculation.out
+#PBS -e z_3_all_galaxies_semi_analytical_calculation.err
 #PBS -q starq
 #PBS -r n
 #PBS -j oe
@@ -19,6 +19,7 @@ cd skirt/python_files/semi_analytical_methods
 
 
 number_of_background_galaxies=128
+redshift=3.0
 
 # Function to wait for all background processes to finish
 wait_for_jobs() {
@@ -54,7 +55,7 @@ galaxy_names=(
 
 for galaxy in "${galaxy_names[@]}"; do
 
-    python semi_analytical_calculation.py $galaxy zoom_in 3.0 &
+    python semi_analytical_calculation.py $galaxy zoom_in $redshift &
 
     # Increment counter
     ((counter++))
@@ -74,9 +75,10 @@ wait_for_jobs
 ####### firebox
 counter=0
 
-for i in {0..999}
+# for i in {0..999}
+for i in {0..100}
 do
-    python semi_analytical_calculation.py gal$i firebox 3.0 &
+    python semi_analytical_calculation.py gal$i firebox $redshift &
 
     # Increment counter
     ((counter++))
@@ -104,7 +106,7 @@ galaxy_names=(
 
 for galaxy in "${galaxy_names[@]}"; do
 
-    python semi_analytical_calculation.py $galaxy particle_split 3.0 &
+    python semi_analytical_calculation.py $galaxy particle_split $redshift &
 
     # Increment counter
     ((counter++))
