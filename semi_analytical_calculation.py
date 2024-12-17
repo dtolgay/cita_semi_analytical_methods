@@ -74,32 +74,37 @@ def main(
         "cf_1": {
             "df": pd.DataFrame(),
             "clumping_factor": 1,
-            "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_averageSobolevH_cf_1.txt"
+            "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_smoothingLength_cf_1.txt"
         },
         "cf_2": {
             "df": pd.DataFrame(),
             "clumping_factor": 2,
-            "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_averageSobolevH_cf_2.txt"
+            "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_smoothingLength_cf_2.txt"
         },  
-        "cf_10": {
+        "cf_4": {
             "df": pd.DataFrame(),
-            "clumping_factor": 10,
-            "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_averageSobolevH_cf_10.txt"
-        },
-        "cf_100": {
-            "df": pd.DataFrame(),
-            "clumping_factor": 100,
-            "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_averageSobolevH_cf_100.txt"
-        },
-        "cf_500": {
-            "df": pd.DataFrame(),
-            "clumping_factor": 500,
-            "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_averageSobolevH_cf_500.txt"
-        },    
+            "clumping_factor": 4,
+            "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_smoothingLength_cf_4.txt"
+        },          
+        # "cf_10": {
+        #     "df": pd.DataFrame(),
+        #     "clumping_factor": 10,
+        #     "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_smoothingLength_cf_10.txt"
+        # },
+        # "cf_100": {
+        #     "df": pd.DataFrame(),
+        #     "clumping_factor": 100,
+        #     "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_smoothingLength_cf_100.txt"
+        # },
+        # "cf_500": {
+        #     "df": pd.DataFrame(),
+        #     "clumping_factor": 500,
+        #     "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_smoothingLength_cf_500.txt"
+        # },    
         "cf_functionOfTurbulence" : {
             "df": pd.DataFrame(),
             "clumping_factor": clumping_factor_from_turbulence_velocity(gas_particles_df['turbulence']),
-            "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_averageSobolevH_cf_functionOfTurbulence_.txt"
+            "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_smoothingLength_cf_functionOfTurbulence_.txt"
         },                                      
     }    
     
@@ -336,8 +341,11 @@ def clumping_factor_from_turbulence_velocity(turbulence_velocity):
 
 def calculate_properties_of_gas_particles(gas_df, clumping_factor):
 
+    # length = np.array(gas_df["average_sobolev_smoothingLength"])
+    length = np.array(gas_df["smoothing_length"])
+
     h2_mass_fraction, gas_column_density, dust_optical_depth, scaled_radiation_field, s = h2_mass_fraction_calculator(
-        local_density_scale_height = np.array(gas_df["average_sobolev_smoothingLength"]), # pc
+        local_density_scale_height = length, # pc
         density = np.array(gas_df["density"]), # gr / cm^3
         metallicity= np.array(gas_df["metallicity"]),  # Zsolar
         clumping_factor = clumping_factor

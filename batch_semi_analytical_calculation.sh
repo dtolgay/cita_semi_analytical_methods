@@ -18,7 +18,8 @@ cd $post_processing_fire_outputs
 cd skirt/python_files/semi_analytical_methods
 
 
-number_of_background_galaxies=128
+# number_of_background_galaxies=128
+number_of_background_galaxies=30
 redshift=3.0
 
 # Function to wait for all background processes to finish
@@ -76,7 +77,7 @@ wait_for_jobs
 counter=0
 
 # for i in {0..999}
-for i in {0..100}
+for i in {0..50}
 do
     python semi_analytical_calculation.py gal$i firebox $redshift &
 
@@ -95,28 +96,28 @@ wait_for_jobs
 
 
 
-####### particle_split
-counter=0
+# ####### particle_split
+# counter=0
 
-List of galaxy names
-galaxy_names=(
-    "m12i_r880_md" 
-)
+# List of galaxy names
+# galaxy_names=(
+#     "m12i_r880_md" 
+# )
 
 
-for galaxy in "${galaxy_names[@]}"; do
+# for galaxy in "${galaxy_names[@]}"; do
 
-    python semi_analytical_calculation.py $galaxy particle_split $redshift &
+#     python semi_analytical_calculation.py $galaxy particle_split $redshift &
 
-    # Increment counter
-    ((counter++))
+#     # Increment counter
+#     ((counter++))
 
-    # Every 10th galaxy, wait for all background jobs to finish
-    if [ $counter -ge $number_of_background_galaxies ]; then
-        wait_for_jobs
-        counter=0
-    fi
-done
+#     # Every 10th galaxy, wait for all background jobs to finish
+#     if [ $counter -ge $number_of_background_galaxies ]; then
+#         wait_for_jobs
+#         counter=0
+#     fi
+# done
 
-# Wait for the last set of jobs to finish
-wait_for_jobs
+# # Wait for the last set of jobs to finish
+# wait_for_jobs
