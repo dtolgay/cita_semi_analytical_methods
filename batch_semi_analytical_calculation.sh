@@ -1,10 +1,10 @@
 #!/bin/bash -l
-#PBS -l nodes=1:ppn=128
+#PBS -l nodes=1:ppn=16
 #PBS -l walltime=23:00:00
-#PBS -N z_3_all_galaxies_semi_analytical_calculation
-#PBS -o z_3_all_galaxies_semi_analytical_calculation.out
-#PBS -e z_3_all_galaxies_semi_analytical_calculation.err
-#PBS -q starq
+#PBS -N z_2_all_galaxies_semi_analytical_calculation
+#PBS -o z_2_all_galaxies_semi_analytical_calculation.out
+#PBS -e z_2_all_galaxies_semi_analytical_calculation.err
+#PBS -q hpq
 #PBS -r n
 #PBS -j oe
 
@@ -12,15 +12,15 @@
 # starq -> 128
 
 module purge 
-module load python 
+module load python/3.10.2
 
 cd $post_processing_fire_outputs
 cd skirt/python_files/semi_analytical_methods
 
 
 # number_of_background_galaxies=128
-number_of_background_galaxies=30
-redshift=3.0
+number_of_background_galaxies=16
+redshift=2.0
 
 # Function to wait for all background processes to finish
 wait_for_jobs() {
@@ -76,8 +76,8 @@ wait_for_jobs
 ####### firebox
 counter=0
 
-# for i in {0..999}
-for i in {0..50}
+for i in {0..1000}
+# for i in {0..51}
 do
     python semi_analytical_calculation.py gal$i firebox $redshift &
 
@@ -96,28 +96,28 @@ wait_for_jobs
 
 
 
-# ####### particle_split
-# counter=0
+####### particle_split
+counter=0
 
-# List of galaxy names
-# galaxy_names=(
-#     "m12i_r880_md" 
-# )
+List of galaxy names
+galaxy_names=(
+    "m12i_r880_md" 
+)
 
 
-# for galaxy in "${galaxy_names[@]}"; do
+for galaxy in "${galaxy_names[@]}"; do
 
-#     python semi_analytical_calculation.py $galaxy particle_split $redshift &
+    python semi_analytical_calculation.py $galaxy particle_split $redshift &
 
-#     # Increment counter
-#     ((counter++))
+    # Increment counter
+    ((counter++))
 
-#     # Every 10th galaxy, wait for all background jobs to finish
-#     if [ $counter -ge $number_of_background_galaxies ]; then
-#         wait_for_jobs
-#         counter=0
-#     fi
-# done
+    # Every 10th galaxy, wait for all background jobs to finish
+    if [ $counter -ge $number_of_background_galaxies ]; then
+        wait_for_jobs
+        counter=0
+    fi
+done
 
-# # Wait for the last set of jobs to finish
-# wait_for_jobs
+# Wait for the last set of jobs to finish
+wait_for_jobs

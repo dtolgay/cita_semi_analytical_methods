@@ -21,7 +21,7 @@ def main(
     print(f"-------------------------------------------------------------- {galaxy_name} --------------------------------------------------------------")
 
     # Read cloudy_gas_txt 
-    run_dir = "voronoi_1e6"
+    run_dir = "voronoi_1e5"
     cloudy_gas_particles_file_directory = f"/mnt/raid-cita/dtolgay/FIRE/post_processing_fire_outputs/skirt/runs_hden_radius/{galaxy_type}/z{redshift}/{galaxy_name}/{run_dir}" 
 
 
@@ -76,16 +76,16 @@ def main(
             "clumping_factor": 1,
             "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_smoothingLength_cf_1.txt"
         },
-        "cf_2": {
-            "df": pd.DataFrame(),
-            "clumping_factor": 2,
-            "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_smoothingLength_cf_2.txt"
-        },  
-        "cf_4": {
-            "df": pd.DataFrame(),
-            "clumping_factor": 4,
-            "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_smoothingLength_cf_4.txt"
-        },          
+        # "cf_2": {
+        #     "df": pd.DataFrame(),
+        #     "clumping_factor": 2,
+        #     "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_smoothingLength_cf_2.txt"
+        # },  
+        # "cf_4": {
+        #     "df": pd.DataFrame(),
+        #     "clumping_factor": 4,
+        #     "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_smoothingLength_cf_4.txt"
+        # },          
         # "cf_10": {
         #     "df": pd.DataFrame(),
         #     "clumping_factor": 10,
@@ -101,11 +101,11 @@ def main(
         #     "clumping_factor": 500,
         #     "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_smoothingLength_cf_500.txt"
         # },    
-        "cf_functionOfTurbulence" : {
-            "df": pd.DataFrame(),
-            "clumping_factor": clumping_factor_from_turbulence_velocity(gas_particles_df['turbulence']),
-            "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_smoothingLength_cf_functionOfTurbulence_.txt"
-        },                                      
+        # "cf_functionOfTurbulence" : {
+        #     "df": pd.DataFrame(),
+        #     "clumping_factor": clumping_factor_from_turbulence_velocity(gas_particles_df['turbulence']),
+        #     "write_file_path": f"{cloudy_gas_particles_file_directory}/semi_analytical_smoothingLength_cf_functionOfTurbulence_.txt"
+        # },                                      
     }    
     
     columns2write = [
